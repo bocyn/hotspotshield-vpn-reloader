@@ -24,3 +24,8 @@ async def run_command(command: str, debug_logs: bool = False) -> str:
         logger.exception(f"stderr: {stderr}, stdout: {stdout}")
 
     return stdout
+
+
+if __name__ == "__main__":
+    import aiorun
+    aiorun.run(run_command("top"))

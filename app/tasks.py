@@ -1,8 +1,10 @@
 import asyncio
 import random
 import re
+from typing import Tuple
 
 from helpers import run_command
+import config
 
 from logging import getLogger
 
@@ -25,14 +27,19 @@ async def get_locations() -> list:
     return locations
 
 
-async def is_connected() -> bool:
-    pattern = "VPN connection state : connected"
+async def force_stop(interval):
+    await run_command(command=f"hotspotshield stop")
+    await asyncio.sleep(interval)
+
+
+async def is_connected() -> Tuple[bool, str]:
+    CONNECTED = "VPN connection state : connected"
     output = await run_command(command=f"hotspotshield status")
-    if pattern in output:
-        return True
+    if CONNECTED in output:
+        return True, output
     else:
         logger.warning(False)
-        return False
+        return False, output
 
 
 async def connect(location: str):
@@ -40,8 +47,11 @@ async def connect(location: str):
 
 
 async def keep_alive(locations: list, interval: int):
+    STOP = "hotspotshield stop"
     while True:
-        if not await is_connected():
+        flag, output = await is_connected()
+        if not flag:
+            await force_stop(config.STOP_INTERVAL)
             await connect(random.choice(locations))
             await asyncio.sleep(interval)
         await asyncio.sleep(interval)

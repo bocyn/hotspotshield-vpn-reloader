@@ -37,3 +37,7 @@ PRINT_STATUS_INTERVAL=5
 DISCONNECT_INTERVAL=180
 ```
 
+* interval in `seconds` to wait stop command
+```shell script
+STOP_INTERVAL=5
+```
