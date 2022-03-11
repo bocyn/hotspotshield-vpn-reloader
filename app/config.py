@@ -9,5 +9,5 @@ LOG_FORMAT = (
 
 KEEP_ALIVE_INTERVAL = int(os.getenv("KEEP_ALIVE_INTERVAL", 5))
 PRINT_STATUS_INTERVAL = int(os.getenv("PRINT_STATUS_INTERVAL", 5))
-DISCONNECT_INTERVAL = int(os.getenv("DISCONNECT_INTERVAL", 60 * 3))  # God loves the trinity ;)
+DISCONNECT_INTERVAL = int(os.getenv("DISCONNECT_INTERVAL", 60 * 10))
 STOP_INTERVAL = int(os.getenv("STOP_INTERVAL", 5))
